@@ -6,6 +6,7 @@
       <input type="text" placeholder="age" v-model="input.age"/>
       <button @click="add(input.name,input.age)">添加</button>
     </p>
+ 
     <div>
       <table cellspacing="0" cellpadding="0">
         <thead>
@@ -39,7 +40,9 @@ export default {
       input:{
         name:'',
         age:'',
-        serach:''
+        serach:'',
+        names:"",
+        ages:''
       }
     }
   },
@@ -66,8 +69,9 @@ export default {
       this.$store.dispatch('AXIOS_ACTION_SERACH',val)
       this.search = ''
     },
+    //修改
     update(){
-      
+
     }
   },
   computed:{

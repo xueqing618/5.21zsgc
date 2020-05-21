@@ -36,15 +36,13 @@ export default new Vuex.Store({
     'AXIOS_ACTION_ADD'({commit},obj){
       console.log(obj)
       axios.post('https://api.baxiaobu.com/index.php/home/v5/add',qs.stringify(obj))
-      .then(()=>{
-        
-      console.log(obj)
-        axios.get('https://api.baxiaobu.com/index.php/home/v5/findUser')
         .then(res=>{
+         if(res.data.status===200){
           commit('AXIOS_DATA',res.data.users)
+         }
         })
-      })
     },
+    //搜索
     'AXIOS_ACTION_SERACH' ({ commit },name ) {
       axios.post('https://api.baxiaobu.com/index.php/home/v5/findUser?keyword='+name)
         .then((res)=>{
