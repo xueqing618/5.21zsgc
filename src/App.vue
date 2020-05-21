@@ -1,32 +1,95 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div class="app">
+    <p><input type="text" placeholder="搜索" v-model="input.serach"/><button @click="serach(input.serach,data)">搜索</button></p>
+    <p>
+      <input type="text" placeholder="name" v-model="input.name"/>
+      <input type="text" placeholder="age" v-model="input.age"/>
+      <button @click="add(input.name,input.age)">添加</button>
+    </p>
+    <div>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td>名字</td>
+            <td>年龄</td>
+            <td>地址</td>
+            <td>操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in data" :key="item.id">
+            <td><input type="text"/>{{item.name}}</td>
+            <td><input type="text"/>{{item.age}}</td>
+            <td><input type="text"/>{{item.address}}</td>
+            <td><button @click="onclick(item.id)">删除</button><button>修改</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <router-view/>
   </div>
 </template>
+<script>
+import {mapState} from 'vuex'
+export default {
+  data(){
+   return {
+      input:{
+        name:'',
+        age:'',
+        serach:''
+      }
+    }
+  },
+  created () {
+   this.$store.dispatch('AXIOS_ACTION_DATA')
+  },
+  methods:{
+    //删除
+    onclick(id){
+      this.$store.dispatch('AXIOS_ACTION_DEL',id)
+    },
+    //添加
+    add(name,age){
+      let obj={name,age}
+       this.$store.dispatch('AXIOS_ACTION_ADD',obj)
+       window.location.reload(),{
+          name:this.input.name,   
+          phone:this.input.phone,
 
+       }
+    },
+    serach(val,data){
+      for(var i=0;i<data.length;i++){
+        if(data[i].name.indexOf(val)!=-1){
+          data==this.data
+          console.log(this.data)
+          console.log(data)
+        }
+      }
+    }
+  },
+  computed:{
+    ...mapState(['data']),
+  }
+}
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+table{
+  width: 700px;
+  border: 1px solid #ccc;
+}
+
+td{
+  width: 180px;
+  height: 40px;
   text-align: center;
-  color: #2c3e50;
+  border: 1px solid #ccc;
 }
-
-#nav {
-  padding: 30px;
+td input{
+  border: 0;
+  outline: 0;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+input{
+  height: 40px;
 }
 </style>
