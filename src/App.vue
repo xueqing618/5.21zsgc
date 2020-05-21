@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <p><input type="text" placeholder="搜索" v-model="input.serach"/><button @click="serach(input.serach,data)">搜索</button></p>
+    <p><input type="text" placeholder="搜索" v-model="input.serach"/><button @click="serach(input.serach)">搜索</button></p>
     <p>
       <input type="text" placeholder="name" v-model="input.name"/>
       <input type="text" placeholder="age" v-model="input.age"/>
@@ -21,7 +21,10 @@
             <td><input type="text"/>{{item.name}}</td>
             <td><input type="text"/>{{item.age}}</td>
             <td><input type="text"/>{{item.address}}</td>
-            <td><button @click="onclick(item.id)">删除</button><button>修改</button></td>
+            <td>
+              <button @click="onclick(item.id)">删除</button>
+              <button @click="update">修改</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -58,14 +61,13 @@ export default {
 
        }
     },
-    serach(val,data){
-      for(var i=0;i<data.length;i++){
-        if(data[i].name.indexOf(val)!=-1){
-          data==this.data
-          console.log(this.data)
-          console.log(data)
-        }
-      }
+    //搜索
+    serach(val){
+      this.$store.dispatch('AXIOS_ACTION_SERACH',val)
+      this.search = ''
+    },
+    update(){
+      
     }
   },
   computed:{

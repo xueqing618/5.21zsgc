@@ -45,7 +45,13 @@ export default new Vuex.Store({
         })
       })
     },
- 
+    'AXIOS_ACTION_SERACH' ({ commit },name ) {
+      axios.post('https://api.baxiaobu.com/index.php/home/v5/findUser?keyword='+name)
+        .then((res)=>{
+          console.log(name)
+          commit('AXIOS_DATA',res.data.users)
+      })
+    },
   },
   modules: {
     
